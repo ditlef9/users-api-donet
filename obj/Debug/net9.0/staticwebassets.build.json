@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "HNjVX8vDUiiu5DHzrEqOMEmO5flFsGZnaxO/ZPZ6Vzc=",
+  "Source": "users-api-donet",
+  "BasePath": "_content/users-api-donet",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
