@@ -39,13 +39,13 @@ git clone git@github.com:ditlef9/users-api-donet.git
 
 **C. Connect to database**
 
-<u>Windows Users:</u>
+*Windows Users:*
 
 Open Azure Data Studio and create a database named
 `UsersDotNetDev`.
 
 
-<u>Ubuntu and MacOS:</u>
+*Ubuntu and MacOS:*
 
 Install Docker Desktop:
 
@@ -54,13 +54,13 @@ Install Docker Desktop:
 
 
 
-Create a database:
+MacOS and Linux create a database in Docker:
 
 ```
 docker run -e "ACCEPT_EULA=1" -e "MSSQL_USER=SA" -e "MSSQL_SA_PASSWORD=SQLConnect1\!" -e "MSSQL_PID=Developer" -p 1433:1433 -d --name=sql_connect mcr.microsoft.com/azure-sql-edge
 ```
 
-Open `appsettings.json` and change `DefaultConnection` to: 
+MacOS and Linux open `appsettings.json` and change `DefaultConnection` to: 
 ```
 Server=localhost;Database=UsersDotNetDev;Trusted_Connection=false;TrustServerCertificate=True;User Id=sa;Password=SQLConnect1!;
 ```
