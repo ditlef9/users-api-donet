@@ -3,17 +3,14 @@
 
 DROP TABLE IF EXISTS Users;
 
--- IF OBJECT_ID('TutorialAppSchema.Users') IS NOT NULL
---     DROP TABLE TutorialAppSchema.Users;
-
 CREATE TABLE Users
 (
-    UserId INT IDENTITY(1, 1) PRIMARY KEY
-    , FirstName NVARCHAR(50)
-    , LastName NVARCHAR(50)
-    , Email NVARCHAR(50) UNIQUE
-    , Gender NVARCHAR(50)
-    , Active BIT
+    UserId INT IDENTITY(1, 1) PRIMARY KEY, 
+    FirstName NVARCHAR(50), 
+    LastName NVARCHAR(50), 
+    Email NVARCHAR(50) UNIQUE, 
+    Gender NVARCHAR(50), 
+    Active BIT
 );
 
 INSERT INTO Users (FirstName, LastName, Email, Gender, Active) VALUES 

@@ -7,36 +7,40 @@ namespace UsersApiDotnet
 {
     public class DataContextDapper
     {
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
+
         public DataContextDapper(IConfiguration config)
         {
             _config = config;
         }
-            
-        public IEnumerable<T> LoadData<T>(string sql)
+
+        private IDbConnection CreateConnection()
         {
-            IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-            return dbConnection.Query<T>(sql);
+            return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
         }
 
-        public T LoadDataSingle<T>(string sql)
+        public IEnumerable<T> LoadData<T>(string sql, object? parameters = null)
         {
-            IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-            return dbConnection.QuerySingle<T>(sql);
+            using IDbConnection dbConnection = CreateConnection();
+            return dbConnection.Query<T>(sql, parameters);
         }
 
-        public bool ExecuteSql(string sql)
+        public T LoadDataSingle<T>(string sql, object? parameters = null)
         {
-            IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-            return (dbConnection.Execute(sql) > 0);
+            using IDbConnection dbConnection = CreateConnection();
+            return dbConnection.QuerySingleOrDefault<T>(sql, parameters);
         }
 
-        public int ExecuteSqlWithRowCount(string sql)
+        public bool ExecuteSql(string sql, object? parameters = null)
         {
-            IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-            return dbConnection.Execute(sql);
+            using IDbConnection dbConnection = CreateConnection();
+            return dbConnection.Execute(sql, parameters) > 0;
         }
 
-        
+        public int ExecuteSqlWithRowCount(string sql, object? parameters = null)
+        {
+            using IDbConnection dbConnection = CreateConnection();
+            return dbConnection.Execute(sql, parameters);
+        }
     }
 }

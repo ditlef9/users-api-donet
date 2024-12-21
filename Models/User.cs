@@ -1,5 +1,5 @@
 namespace UsersApiDotnet{
-    public partial class Users{
+    public partial class User{
         public int UserId {get; set;}
         public String FirstName {get; set;}
         public String LastName {get; set;}
@@ -7,7 +7,7 @@ namespace UsersApiDotnet{
         public String Gender {get; set;}
         public bool Active {get; set;}
         
-        public Users(){
+        public User(){
             if(FirstName == null){
                 FirstName = "";
             }
