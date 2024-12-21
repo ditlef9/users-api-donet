@@ -10,8 +10,8 @@ public class UserController : ControllerBase
 
     }
 
-    [HttpGet("test/{testValue}")]
-    public string[] Test(string testValue)
+    [HttpGet("GetUsers/{testValue}")]
+    public string[] GetUsers(string testValue)
     {
         string[] responseArray = new string[] {
             "test1",
