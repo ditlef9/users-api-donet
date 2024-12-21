@@ -1,13 +1,15 @@
+using UsersApiDotnet.DatabaseMigration;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Register services
 builder.Services.AddControllers();
-
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
-// Swagger
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpointsApiExplorer(); // Swagger
 builder.Services.AddSwaggerGen(); // Maps all endpoints and defined swagger
+
+// Register DatabaseMigration
+builder.Services.AddSingleton<DatabaseMigration>();
 
 // Build
 builder.Services.AddCors((options) =>
@@ -30,6 +32,12 @@ builder.Services.AddCors((options) =>
  
 var app = builder.Build();
  
+// Run the database migration
+using (var scope = app.Services.CreateScope())
+{
+    var dbMigration = scope.ServiceProvider.GetRequiredService<DatabaseMigration>();
+    dbMigration.InitDatabase();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

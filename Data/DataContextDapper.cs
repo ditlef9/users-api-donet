@@ -8,12 +8,9 @@ namespace UsersApiDotnet
     public class DataContextDapper
     {
         private IConfiguration _config;
-        //private string? _connectionString;
         public DataContextDapper(IConfiguration config)
         {
-            // _config = config;
             _config = config;
-            // _connectionString = config.GetConnectionString("DefaultConnection");
         }
             
         public IEnumerable<T> LoadData<T>(string sql)

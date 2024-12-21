@@ -27,7 +27,7 @@ The API is using C# as the programming language. This is because the .NET ecosys
 * Git - https://git-scm.com/downloads
 * DotNet - https://dotnet.microsoft.com/en-us/download
 * Microsoft SQL Server Developer - https://www.microsoft.com/en-us/sql-server/sql-server-downloads
-* Azure Data Studio
+* Azure Data Studio - https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=win-install%2Cwin-user-install%2Credhat-install%2Cwindows-uninstall%2Credhat-uninstall
 
 **B. Clone the project**
 
@@ -41,20 +41,28 @@ git clone git@github.com:ditlef9/users-api-donet.git
 
 <u>Windows Users:</u>
 
-Nothing has to be changed
+Open Azure Data Studio and create a database named
+`UsersDotNetDev`.
 
 
 <u>Ubuntu and MacOS:</u>
 
-Install Docker Desktop and run a database:
+Install Docker Desktop:
+
+* MacOS: https://docs.docker.com/desktop/install/mac-install/
+* Linux: https://docs.docker.com/desktop/install/linux-install/
+
+
+
+Create a database:
 
 ```
-
+docker run -e "ACCEPT_EULA=1" -e "MSSQL_USER=SA" -e "MSSQL_SA_PASSWORD=SQLConnect1\!" -e "MSSQL_PID=Developer" -p 1433:1433 -d --name=sql_connect mcr.microsoft.com/azure-sql-edge
 ```
 
 Open `appsettings.json` and change `DefaultConnection` to: 
 ```
-Server=localhost;Database=DotNetCourseDatabase;Trusted_Connection=false;TrustServerCertificate=True;User Id=sa;Password=SQLConnect1!;
+Server=localhost;Database=UsersDotNetDev;Trusted_Connection=false;TrustServerCertificate=True;User Id=sa;Password=SQLConnect1!;
 ```
 
 * UserName: sa
@@ -62,9 +70,13 @@ Server=localhost;Database=DotNetCourseDatabase;Trusted_Connection=false;TrustSer
 
 **C. Run the project**
 
+First install the certificate for localhost:
 ```
-dotnet watch run
+dotnet dev-certs https --trust
 ```
+
+Then lunch the API:
+
 ```
 dotnet watch run --launch-profile https
 ```
