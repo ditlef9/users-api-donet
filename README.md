@@ -22,13 +22,14 @@ The API is using C# as the programming language. This is because the .NET ecosys
 
 ## 🏠 1 Howto run locally
 
-A. Install software:
+**A. Install software:**
 * VS Code - https://code.visualstudio.com
 * Git - https://git-scm.com/downloads
 * DotNet - https://dotnet.microsoft.com/en-us/download
 * Microsoft SQL Server Developer - https://www.microsoft.com/en-us/sql-server/sql-server-downloads
+* Azure Data Studio
 
-B. Clone the project
+**B. Clone the project**
 
 ```
 mkdir dotnet
@@ -36,7 +37,30 @@ cd dotnet
 git clone git@github.com:ditlef9/users-api-donet.git
 ```
 
-C. Run the project
+**C. Connect to database**
+
+<u>Windows Users:</u>
+
+Nothing has to be changed
+
+
+<u>Ubuntu and MacOS:</u>
+
+Install Docker Desktop and run a database:
+
+```
+
+```
+
+Open `appsettings.json` and change `DefaultConnection` to: 
+```
+Server=localhost;Database=DotNetCourseDatabase;Trusted_Connection=false;TrustServerCertificate=True;User Id=sa;Password=SQLConnect1!;
+```
+
+* UserName: sa
+* Password: SQLConnect1!
+
+**C. Run the project**
 
 ```
 dotnet watch run
