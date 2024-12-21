@@ -13,7 +13,7 @@ The API is using C# as the programming language. This is because the .NET ecosys
 
 [🏠 1 Howto run locally](1-howto-run-locally)<br>
 [☁️ 2 Howto deploy to Azure](2-howto-deploy-to-azure)<br>
-[📖 3 API Documentation (Swagger)](3-API-Documentation-Swagger)<br>
+[📖 3 API Documentation (Swagger)](3-api-documentation-swagger)<br>
 [🛠️ 4 How I created the API](4-how-i-created-the-api)<br>
 [📜 5 License](📜-5-license)<br>
 
@@ -26,15 +26,29 @@ A. Install software:
 * VS Code - https://code.visualstudio.com
 * Git - https://git-scm.com/downloads
 * DotNet - https://dotnet.microsoft.com/en-us/download
-* Microsoft SQL Server (Developer) - https://www.microsoft.com/en-us/sql-server/sql-server-downloads
+* Microsoft SQL Server Developer - https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 
 B. Clone the project
 
+```
+mkdir dotnet
+cd dotnet
+git clone git@github.com:ditlef9/users-api-donet.git
+```
+
 C. Run the project
 
-* ```dotnet run```
-* ...or...
-* ```dotnet watch run```
+```
+dotnet watch run
+```
+```
+dotnet watch run --launch-profile https
+```
+
+D. The API is available at:
+
+* https://localhost:7026
+* http://localhost:5248
 
 ---
 
