@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Data.SqlClient;
 
-namespace UsersApiDotnet.DatabaseMigration
+namespace UsersApiDotnet.Data
 {
     public class DatabaseMigration
     {

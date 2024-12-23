@@ -1,4 +1,4 @@
-using UsersApiDotnet.DatabaseMigration;
+using UsersApiDotnet.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

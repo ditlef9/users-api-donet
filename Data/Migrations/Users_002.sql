@@ -8,7 +8,7 @@ CREATE TABLE Users
     UserId INT IDENTITY(1, 1) PRIMARY KEY, 
     FirstName NVARCHAR(50), 
     LastName NVARCHAR(50), 
-    Email NVARCHAR(50) UNIQUE, 
+    Email NVARCHAR(200) UNIQUE, 
     Gender NVARCHAR(50), 
     Active BIT
 );

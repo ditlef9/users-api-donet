@@ -1,4 +1,4 @@
-namespace UsersApiDotnet{
+namespace UsersApiDotnet.Models{
     public partial class User{
         public int UserId {get; set;}
         public String FirstName {get; set;}

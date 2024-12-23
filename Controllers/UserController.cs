@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using UsersApiDotnet.Data;
 using UsersApiDotnet.Dtos;
+using UsersApiDotnet.Models;
 
 namespace UsersApiDotnet.Controllers;
 
