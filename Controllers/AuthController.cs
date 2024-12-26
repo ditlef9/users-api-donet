@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using UsersApiDotnet.Data;
 using UsersApiDotnet.Dtos;
+using UsersApiDotnet.Helpers;
 
 namespace UsersApiDotnet.Controllers;
 
@@ -19,12 +20,11 @@ namespace UsersApiDotnet.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly DataContextDapper _dapper;
-    private readonly IConfiguration _config;
-
+    private readonly AuthHelper _authHelper;
     public AuthController(IConfiguration config)
     {
         _dapper = new DataContextDapper(config);
-        _config = config;
+        _authHelper = new AuthHelper(config);
     }
 
     /* Register -----------------------------------------------------------------------*/
@@ -75,7 +75,7 @@ public class AuthController : ControllerBase
         }
 
         // Generate password hash
-        byte[] passwordHash = GetPasswordHash(userForRegistration.Password, passwordSalt);
+        byte[] passwordHash = _authHelper.GetPasswordHash(userForRegistration.Password, passwordSalt);
 
         // Insert authentication data
         string sqlAddAuth = @"
@@ -144,7 +144,7 @@ public class AuthController : ControllerBase
         }
 
         // Generate the password hash based on the provided password and stored salt
-        byte[] passwordHash = GetPasswordHash(userForLogin.Password, userForConfirmation.PasswordSalt);
+        byte[] passwordHash =  _authHelper.GetPasswordHash(userForLogin.Password, userForConfirmation.PasswordSalt);
 
         // Compare the generated hash with the stored hash byte-by-byte
         if (!passwordHash.SequenceEqual(userForConfirmation.PasswordHash))
@@ -158,61 +158,11 @@ public class AuthController : ControllerBase
 
         int userId = _dapper.LoadDataSingle<int>(userIdSql);
         return Ok(new Dictionary<string, string> {
-            {"token", CreateToken(userId)}
+            {"token",  _authHelper.CreateToken(userId)}
         });
 
     }
 
-
-    /*- Get Password Hash ------------------------------------------------------ */
-    private byte[] GetPasswordHash(string password, byte[] passwordSalt)
-    {
-        string passwordSaltPlusString = _config.GetSection("AppSettings:PasswordKey").Value +
-            Convert.ToBase64String(passwordSalt);
-
-        return KeyDerivation.Pbkdf2(
-            password: password,
-            salt: Encoding.ASCII.GetBytes(passwordSaltPlusString),
-            prf: KeyDerivationPrf.HMACSHA256,
-            iterationCount: 1000000,
-            numBytesRequested: 256 / 8
-        );
-    }
-
-    /*- Create Token --------------------------------------------------------- */
-    private string CreateToken(int userId)
-    {
-        Claim[] claims = new Claim[] {
-            new Claim("userId", userId.ToString())
-        };
-
-        string? tokenKeyString = _config.GetSection("AppSettings:TokenKey").Value;
-
-        SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(
-                    tokenKeyString != null ? tokenKeyString : ""
-                )
-            );
-
-        SigningCredentials credentials = new SigningCredentials(
-                tokenKey,
-                SecurityAlgorithms.HmacSha512Signature
-            );
-
-        SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor()
-        {
-            Subject = new ClaimsIdentity(claims),
-            SigningCredentials = credentials,
-            Expires = DateTime.Now.AddDays(1)
-        };
-
-        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-
-        SecurityToken token = tokenHandler.CreateToken(descriptor);
-
-        return tokenHandler.WriteToken(token);
-
-    }
     
     /*- Refresh Token --------------------------------------------------------- */
     [HttpGet("RefreshToken")]
@@ -224,7 +174,7 @@ public class AuthController : ControllerBase
 
         int userId = _dapper.LoadDataSingle<int>(userIdSql);
 
-        return CreateToken(userId);
+        return  _authHelper.CreateToken(userId);
     }
 
 }
