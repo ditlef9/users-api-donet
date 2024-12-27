@@ -1,19 +1,17 @@
-namespace DotnetAPI.Dtos
+namespace UsersApiDotnet.Dtos;
+public partial class UserForLoginDto
 {
-    public partial class UserForLoginDto
+    public string Email {get; set;}
+    public string Password {get; set;}
+    public UserForLoginDto()
     {
-        public string Email {get; set;}
-        public string Password {get; set;}
-        public UserForLoginDto()
+        if (Email == null)
         {
-            if (Email == null)
-            {
-                Email = "";
-            }
-            if (Password == null)
-            {
-                Password = "";
-            }
+            Email = "";
+        }
+        if (Password == null)
+        {
+            Password = "";
         }
     }
 }

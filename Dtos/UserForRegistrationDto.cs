@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-
+namespace UsersApiDotnet.Dtos;
 public partial class UserForRegistrationDto
 {
     [JsonProperty("Email")]
