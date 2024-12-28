@@ -90,13 +90,65 @@ D. The API is available at:
 
 ## ☁️ 2 Howto deploy to Azure
 
+**A Create a Azure SQL Database**
+
+Go to portal.azure.com > SQL databases > [Create]<br><br>
+
+*Basic*
+
+* Subscription: `Development`
+* Resource group: `rg-development`
+
+Database details
+
+* Database Name: `db-development`
+* Server: `[Create new]`
+    - Server name: `srv-db-development`
+    - Location: `Norway`
+
+    - Authentication
+        * Authentication method: `Only use Azure Active Directory (Azure AD) authentication` (more safe) or `Use SQL authentication` (less safe)
+        * Set Azure AD admin: `[None]` or random username and password, example `azadmin` / `KUEvfJsSeaDa9z6k?wmHadXFD`
+
+Compte + storage: [Configure database] <br>
+
+    * Service Tier: `Basic` <br>
+    * Data max size: `0.5 GB`
+
+Backup storae redundancy: `Locally-rendundant backup storage`
+
+*Networking*
+
+* Connectivity endpoint: `Public endpoint` (less secure) or `Private endpoin` (more secure)
+
+Firewall rules:
+
+* Allow Azure services and resources to access this server: `No` (more secure) or `Yes` (less secure)
+
+* Add current client IP address: `Yes` (lets you login to the database from your local machine)
+
+
+
+**B Login to Azure:**
+```
+az login
+```
+
+**C Build and release the application on Linux:**
+```
+dotnet build --configuration Release
+
+az webapp up --sku F1 --name "users-api-dotnet" --os-type linux
+```
+
+Go to portal.azure.com > App Services > users-api-dotnet.
 
 ---
 
 ## 3 📖 API Documentation (Swagger)
 
 
-http://localhost:5248/swagger
+https://localhost:7026/swagger
 
 
 ---
@@ -108,10 +160,6 @@ New Web API:
 dotnet new webapi -n users-api-donet
 ```
 
-Added packages for Swagger Doc:
-```
-dotnet add package Swashbuckle.AspNetCore
-```
 
 ## 📜 5 License
 
