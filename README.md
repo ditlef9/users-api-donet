@@ -3,7 +3,17 @@
 
 ![Logo](docs/api-dotnet-logo.png)
 
+This API demostrates how a C# .net API would look like. It allows the following:
+
+* Lets users Register, Login and refresh token (JWT Token). 
+* Allows users to create posts, get posts, serach for posts, edit and delete posts
+* List users, edit user, delete user, update user, add user
+* Add users salary information, delete salary and update salary
+* Add user job info, delete user job info and update user job info
+
 The API is using C# as the programming language. This is because the .NET ecosystem, including the dotnet CLI, defaults to C# for most project templates, including the webapi template.
+
+It uses `Microsoft SQL` as database and may be deployed to `Azure App Services`. 
 
 
 
